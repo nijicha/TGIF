@@ -1,18 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <h1 className="text-3xl text-amber-400 font-bold underline">
+    <h1 className="text-3xl font-bold text-amber-400 underline">
       Hello world!
-
       <br />
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
+      <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
     </h1>
   )
 }
