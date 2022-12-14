@@ -3,3 +3,4 @@ dist/
 .prettierrc
 .eslintrc.cjs
 env.d.ts
+app/vite-env.d.ts

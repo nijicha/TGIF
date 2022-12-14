@@ -1,4 +1,5 @@
 ## Story
+
 <!--
     Add the story URL here. Prefer the short link format,
     e.g. https://ingedatadev.atlassian.net/browse/RH-1234
@@ -7,6 +8,7 @@
 -
 
 ## Implementation
+
 <!--
     Describe what is the purpose of this PR.
     What is a problem to solve?
