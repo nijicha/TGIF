@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { fabric } from 'fabric'
 
 const user = {
   name: 'Tom Cook',
@@ -24,6 +25,31 @@ const userNavigation = [
 // eslint-disable-next-line
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
+}
+
+const ExampleCanvas = () => {
+  useEffect(() => {
+    const canvas = new fabric.Canvas('canvas', {
+      width: 600,
+      height: 300,
+    })
+
+    const rect = new fabric.Rect({
+      left: 100,
+      top: 100,
+      fill: 'red',
+      width: 20,
+      height: 20,
+    })
+
+    canvas.add(rect)
+  }, [])
+
+  return (
+    <>
+      <canvas id="canvas" className="h-full w-full" />
+    </>
+  )
 }
 
 function App() {
@@ -307,21 +333,7 @@ function App() {
                   </h2>
                   <div className="overflow-hidden rounded-lg bg-white shadow">
                     <div className="p-6">
-                      <div className="font-sans text-5xl font-black text-cyan-700">
-                        Hello World! 🥺
-                      </div>
-                      <div className="font-sans text-2xl font-bold text-rose-600">
-                        สวัสดีโลก! 🤣
-                      </div>
-                      <div className="font-sans text-2xl font-bold text-fuchsia-500">
-                        ハロー・ワールド 🙏
-                      </div>
-                      <div className="font-sans text-2xl font-bold text-lime-500">
-                        Bonjour le monde! 🌶️ grâce à la vente
-                      </div>
-                      <div className="font-sans text-2xl font-bold text-lime-500">
-                        🩷💀🫱🏿‍🫲🏻🌴🐢🐐🍄⚽🫧👑📸🪼👀🚨🏡🕊️🏆😻🌟🧿🍀🫶🏾🍜
-                      </div>
+                      <ExampleCanvas />
                     </div>
                   </div>
                 </section>
