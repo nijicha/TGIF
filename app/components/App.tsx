@@ -202,7 +202,6 @@ function App() {
           </header>
           <main>
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-              {/* Replace with your content */}
               <div className="px-4 py-8 sm:px-0">
                 <div className="font-sans text-5xl font-black text-cyan-700">
                   Hello World! 🥺
@@ -210,7 +209,7 @@ function App() {
                 <div className="font-sans text-2xl font-bold text-rose-600">
                   สวัสดีโลก! 🤣
                 </div>
-                <div className="font-sans text-2xl font-bold text-rose-600">
+                <div className="font-sans text-2xl font-bold text-fuchsia-500">
                   ハロー・ワールド 🙏
                 </div>
                 <div className="font-sans text-2xl font-bold text-lime-500">
