@@ -29,14 +29,6 @@ function classNames(...classes: any) {
 function App() {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
         <Disclosure as="nav" className="border-b border-gray-200 bg-white">
           {({ open }) => (
@@ -212,7 +204,21 @@ function App() {
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
               {/* Replace with your content */}
               <div className="px-4 py-8 sm:px-0">
-                <div className="h-96 rounded-lg border-4 border-dashed border-gray-200" />
+                <div className="font-sans text-5xl font-black text-cyan-700">
+                  Hello World! 🥺
+                </div>
+                <div className="font-sans text-2xl font-bold text-rose-600">
+                  สวัสดีโลก! 🤣
+                </div>
+                <div className="font-sans text-2xl font-bold text-rose-600">
+                  ハロー・ワールド 🙏
+                </div>
+                <div className="font-sans text-2xl font-bold text-lime-500">
+                  Bonjour le monde! 🌶️ grâce à la vente
+                </div>
+                <div className="font-sans text-2xl font-bold text-lime-500">
+                  🩷💀🫱🏿‍🫲🏻🌴🐢🐐🍄⚽🫧👑📸🪼👀🚨🏡🕊️🏆😻🌟🧿🍀🫶🏾🍜
+                </div>
               </div>
               {/* /End replace */}
             </div>

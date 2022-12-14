@@ -168,6 +168,26 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@fontsource/noto-color-emoji@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-color-emoji/-/noto-color-emoji-4.5.2.tgz#cb582cb7e498ff9c1881d28ec64baba03364e0e7"
+  integrity sha512-GXLX+RNU5bHS0IwaapaiEEW5EcLyk5IQa6ZQB1llWfj6ObXfnDBlZYWBcWKd9KLTzFLnrgEVXT/SDMm0YcsZ4w==
+
+"@fontsource/noto-sans-jp@^4.5.12":
+  version "4.5.12"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans-jp/-/noto-sans-jp-4.5.12.tgz#e9cfbe3b62da8c656f464df86256d7852ae0faf8"
+  integrity sha512-tdJAUEyuyyCRD4Ot4ZE8+3uyGeSJQD/soSHr7LoltEQr22IotDDWOlqQKF7CpTaJPwt4iOBoXWtAoSN0huVW6A==
+
+"@fontsource/noto-sans-thai@^4.5.12":
+  version "4.5.12"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans-thai/-/noto-sans-thai-4.5.12.tgz#d98439c43933c2445d33c8b6308bd7049d27e146"
+  integrity sha512-9p/zA9iQT9G2mbaaffiMBrMp97aHdFJ+4en+zNwlNrWHsQSylfsZPeieY02fdZVE2L9WeTyhP55HUpSI3nNVqA==
+
+"@fontsource/roboto@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.8.tgz#56347764786079838faf43f0eeda22dd7328437f"
+  integrity sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==
+
 "@headlessui/react@^1.7.5":
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.5.tgz#c8864b0731d95dbb34aa6b3a60d0ee9ae6f8a7ca"
