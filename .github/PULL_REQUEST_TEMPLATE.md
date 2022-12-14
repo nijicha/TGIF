@@ -2,7 +2,7 @@
 
 <!--
     Add the story URL here. Prefer the short link format,
-    e.g. https://ingedatadev.atlassian.net/browse/RH-1234
+    e.g. https://www.notion.so/nijicha/story-1234
 -->
 
 -
