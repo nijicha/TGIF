@@ -1,0 +1,9 @@
+{
+  "tailwindConfig": "./tailwind.config.cjs",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "endOfLine": "auto",
+  "printWidth": 90,
+  "tabWidth": 2
+}
