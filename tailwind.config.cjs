@@ -362,7 +362,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
-        'Roboto',
+        'Inter',
         '"Noto Sans Thai"',
         '"Noto Sans JP"',
         '"Noto Color Emoji"',
