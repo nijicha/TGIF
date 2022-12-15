@@ -12,7 +12,9 @@
     "lint:check": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "stylelint": "stylelint '**/*.css'",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "designsystem": "npx tailwind-config-viewer -c tailwind.config.cjs -p 2999",
+    "designsystem:build": "npx tailwind-config-viewer -c tailwind.config.cjs export ./public/design-system"
   },
   "dependencies": {
     "@fontsource/inter": "^4.5.14",

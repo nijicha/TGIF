@@ -30,8 +30,8 @@ function classNames(...classes: any) {
 const ExampleCanvas = () => {
   useEffect(() => {
     const canvas = new fabric.Canvas('canvas', {
-      width: 600,
-      height: 300,
+      width: 1000,
+      height: 600,
     })
 
     const rect = new fabric.Rect({
@@ -40,14 +40,65 @@ const ExampleCanvas = () => {
       fill: 'red',
       width: 20,
       height: 20,
+      angle: 45,
     })
 
     canvas.add(rect)
-  }, [])
+
+    rect.set({ left: 20, top: 50 })
+
+    const circle = new fabric.Circle({
+      radius: 20,
+      fill: 'green',
+      left: 100,
+      top: 100,
+    })
+
+    const triangle = new fabric.Triangle({
+      width: 20,
+      height: 30,
+      fill: 'blue',
+      left: 50,
+      top: 50,
+    })
+
+    canvas.add(circle, triangle)
+
+    rect.set('fill', 'red')
+    rect.set({ strokeWidth: 5, stroke: 'rgb(102, 56, 240, 1)' })
+    rect.set('angle', 15).set('flipY', true)
+
+    const redCircle = new fabric.Circle({
+      radius: 55,
+      fill: 'red',
+      originX: 'center',
+      originY: 'center',
+    })
+    const greenCircle = new fabric.Circle({
+      radius: 50,
+      fill: 'green',
+      originX: 'center',
+      originY: 'center',
+    })
+
+    const group = new fabric.Group([redCircle, greenCircle], {
+      height: 150,
+      width: 150,
+    })
+
+    canvas.add(group)
+    canvas.renderAll()
+  })
 
   return (
     <>
-      <canvas id="canvas" className="h-full w-full" />
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="overflow-hidden rounded-lg bg-white shadow">
+          <div className="p-6">
+            <canvas id="canvas" />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
@@ -332,9 +383,7 @@ function App() {
                     Section title
                   </h2>
                   <div className="overflow-hidden rounded-lg bg-white shadow">
-                    <div className="p-6">
-                      <ExampleCanvas />
-                    </div>
+                    <div className="h-64 p-6"></div>
                   </div>
                 </section>
               </div>
@@ -346,12 +395,13 @@ function App() {
                     Section title
                   </h2>
                   <div className="overflow-hidden rounded-lg bg-white shadow">
-                    <div className="p-6">{/* Your content */}</div>
+                    <div className="h-64 p-6">{/* Your content */}</div>
                   </div>
                 </section>
               </div>
             </div>
           </div>
+          <ExampleCanvas />
         </main>
         <footer>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
