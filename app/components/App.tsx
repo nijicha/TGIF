@@ -1,8 +1,8 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { fabric } from 'fabric'
+import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
 
 const user = {
   name: 'Tom Cook',
@@ -27,83 +27,16 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
 
-const ExampleCanvas = () => {
-  useEffect(() => {
-    const canvas = new fabric.Canvas('canvas', {
-      width: 1000,
-      height: 600,
-    })
-
-    const rect = new fabric.Rect({
-      left: 100,
-      top: 100,
-      fill: 'red',
-      width: 20,
-      height: 20,
-      angle: 45,
-    })
-
-    canvas.add(rect)
-
-    rect.set({ left: 20, top: 50 })
-
-    const circle = new fabric.Circle({
-      radius: 20,
-      fill: 'green',
-      left: 100,
-      top: 100,
-    })
-
-    const triangle = new fabric.Triangle({
-      width: 20,
-      height: 30,
-      fill: 'blue',
-      left: 50,
-      top: 50,
-    })
-
-    canvas.add(circle, triangle)
-
-    rect.set('fill', 'red')
-    rect.set({ strokeWidth: 5, stroke: 'rgb(102, 56, 240, 1)' })
-    rect.set('angle', 15).set('flipY', true)
-
-    const redCircle = new fabric.Circle({
-      radius: 55,
-      fill: 'red',
-      originX: 'center',
-      originY: 'center',
-    })
-    const greenCircle = new fabric.Circle({
-      radius: 50,
-      fill: 'green',
-      originX: 'center',
-      originY: 'center',
-    })
-
-    const group = new fabric.Group([redCircle, greenCircle], {
-      height: 150,
-      width: 150,
-    })
-
-    canvas.add(group)
-    canvas.renderAll()
-  })
-
-  return (
-    <>
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="overflow-hidden rounded-lg bg-white shadow">
-          <div className="p-6">
-            <canvas id="canvas" />
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
-
 function App() {
+  const { editor, onReady } = useFabricJSEditor()
+
+  const onAddCircle = () => {
+    editor?.addCircle()
+  }
+  const onAddRectangle = () => {
+    editor?.addRectangle()
+  }
+
   return (
     <>
       <div className="min-h-full">
@@ -401,7 +334,15 @@ function App() {
               </div>
             </div>
           </div>
-          <ExampleCanvas />
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div className="overflow-hidden rounded-lg bg-white shadow">
+              <div className="p-6">
+                <button onClick={onAddCircle}>Add circle</button>
+                <button onClick={onAddRectangle}>Add Rectangle</button>
+                <FabricJSCanvas className="h-full w-full" onReady={onReady} />
+              </div>
+            </div>
+          </div>
         </main>
         <footer>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
