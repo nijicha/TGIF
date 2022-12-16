@@ -339,7 +339,7 @@ function App() {
               <div className="p-6">
                 <button onClick={onAddCircle}>Add circle</button>
                 <button onClick={onAddRectangle}>Add Rectangle</button>
-                <FabricJSCanvas className="h-full w-full" onReady={onReady} />
+                <FabricJSCanvas className="h-[800px] w-full" onReady={onReady} />
               </div>
             </div>
           </div>
