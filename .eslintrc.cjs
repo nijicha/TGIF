@@ -22,6 +22,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'jsx-a11y',
+    'unused-imports',
     'prettier'
   ],
   extends: [
@@ -36,5 +37,12 @@ module.exports = {
   ],
   rules: {
     "react/react-in-jsx-scope": "off",
+    "jsx-a11y/anchor-is-valid": "warn",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ]
   }
 }
