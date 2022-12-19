@@ -6,9 +6,11 @@ import { useEventListener, useUpdateEffect, useWindowSize } from 'usehooks-ts'
 
 import { Transition } from '@headlessui/react'
 import {
-  RectangleStackIcon as RectangleStackIconSolid,
-  PhotoIcon as PhotoIconSolid,
   DocumentArrowDownIcon as DocumentArrowDownIconSolid,
+  MagnifyingGlassMinusIcon as MagnifyingGlassMinusIconSolid,
+  PhotoIcon as PhotoIconSolid,
+  MagnifyingGlassPlusIcon as MagnifyingGlassPlusIconSolid,
+  RectangleStackIcon as RectangleStackIconSolid,
 } from '@heroicons/react/24/solid'
 
 import CandyCane from '../../assets/images/sprites/xmas/candy-cane.png'
@@ -121,12 +123,13 @@ const CanvasBoardContainer = () => {
     //   }
     //   editor?.canvas.renderAll()
     // }
-  }, [updateCanvasSize])
+  }, [loadSavedCanvas, updateCanvasSize])
 
   useUpdateEffect(() => {
     updateCanvasSize()
   }, [updateCanvasSize])
 
+  // Document event Listener
   useEventListener('keydown', onKeyboardEvent)
 
   if (isLoading) {
@@ -135,76 +138,106 @@ const CanvasBoardContainer = () => {
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden bg-base-200">
+      <div className="flex flex-col overflow-hidden bg-base-200 p-2">
         <FabricJSCanvas
-          className={`m-2 flex rounded-lg border border-amber-500`}
+          className="flex rounded-lg border border-amber-500"
           onReady={onReady}
         />
-        <div className="btn-group absolute m-2">
-          <div
-            className="btn"
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              addRect()
-            }}
-            onKeyDown={() => {
-              addRect()
-            }}
-          >
-            <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+        <div className="absolute flex flex-row justify-between rounded-lg bg-transparent">
+          <div className="btn-group m-2.5">
+            <div
+              className="btn"
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                addRect()
+              }}
+              onKeyDown={(event) => {
+                // TODO: Add check from kbd focus event is this button
+                if (event.key === 'Enter') {
+                  addRect()
+                }
+              }}
+            >
+              <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+            </div>
+            <div
+              className="btn"
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                addImage()
+              }}
+              onKeyDown={(event) => {
+                // TODO: Add check from kbd focus event is this button
+                if (event.key === 'Enter') {
+                  addImage()
+                }
+              }}
+            >
+              <PhotoIconSolid className="h-4 w-4" aria-hidden="true" />
+            </div>
+            <div
+              className="btn"
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                saveCanvasToLocalStorage()
+              }}
+              onKeyDown={(event) => {
+                // TODO: Add check from kbd focus event is this button
+                if (event.key === 'Enter') {
+                  saveCanvasToLocalStorage()
+                }
+              }}
+            >
+              <DocumentArrowDownIconSolid className="h-4 w-4" aria-hidden="true" />
+            </div>
           </div>
-          <div
-            className="btn"
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              addImage()
-            }}
-            onKeyDown={() => {
-              addImage()
-            }}
-          >
-            <PhotoIconSolid className="h-4 w-4" aria-hidden="true" />
-          </div>
-          <div
-            className="btn"
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              addRect()
-            }}
-            onKeyDown={() => {
-              addRect()
-            }}
-          >
-            <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
-          </div>
-          <div
-            className="btn"
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              addRect()
-            }}
-            onKeyDown={() => {
-              addRect()
-            }}
-          >
-            <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
-          </div>
-          <div
-            className="btn"
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              saveCanvasToLocalStorage()
-            }}
-            onKeyDown={() => {
-              saveCanvasToLocalStorage()
-            }}
-          >
-            <DocumentArrowDownIconSolid className="h-4 w-4" aria-hidden="true" />
+          <div className="input-group-sm input-group m-2.5">
+            <div
+              className="btn-outline btn"
+              role="button"
+              tabIndex={0}
+              onClick={(event) => {
+                event.preventDefault()
+
+                editor?.zoomOut()
+              }}
+              onKeyDown={(event) => {
+                if (
+                  event.key === '-' &&
+                  (event.ctrlKey || event.metaKey) &&
+                  event.shiftKey
+                ) {
+                  editor?.zoomOut()
+                }
+              }}
+            >
+              <MagnifyingGlassMinusIconSolid className="h-4 w-4" aria-hidden="true" />
+            </div>
+            <input type="number" placeholder="100%" className="input" />
+            <div
+              className="btn-outline btn"
+              role="button"
+              tabIndex={0}
+              onClick={(event) => {
+                event.preventDefault()
+
+                editor?.zoomIn()
+              }}
+              onKeyDown={(event) => {
+                if (
+                  event.key === '+' &&
+                  (event.ctrlKey || event.metaKey) &&
+                  event.shiftKey
+                ) {
+                  editor?.zoomIn()
+                }
+              }}
+            >
+              <MagnifyingGlassPlusIconSolid className="h-4 w-4" aria-hidden="true" />
+            </div>
           </div>
         </div>
       </div>
