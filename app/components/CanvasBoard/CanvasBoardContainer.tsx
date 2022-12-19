@@ -89,6 +89,8 @@ const CanvasBoardContainer = () => {
       console.log('redo')
     } else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
       console.log('undo')
+    } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
+      saveCanvasToLocalStorage()
     }
   }
 
