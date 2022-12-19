@@ -32,10 +32,12 @@ const CanvasBoardContainer = () => {
   const loadSavedCanvas = useCallback(() => {
     setSaveState('editing')
 
-    editor?.canvas.loadFromJSON(
-      JSON.parse(localStorage.myFabricJSCanvas),
-      editor?.canvas.renderAll.bind(editor?.canvas)
-    )
+    if (localStorage.myFabricJSCanvas) {
+      editor?.canvas.loadFromJSON(
+        JSON.parse(localStorage.myFabricJSCanvas),
+        editor?.canvas.renderAll.bind(editor?.canvas)
+      )
+    }
   }, [editor?.canvas])
 
   const saveCanvasToLocalStorage = useCallback(() => {
@@ -196,7 +198,7 @@ const CanvasBoardContainer = () => {
           </div>
           <div className="input-group-sm input-group m-2.5">
             <div
-              className="btn-outline btn"
+              className="btn"
               role="button"
               tabIndex={0}
               onClick={(event) => {
@@ -218,7 +220,7 @@ const CanvasBoardContainer = () => {
             </div>
             <input type="number" placeholder="100%" className="input" />
             <div
-              className="btn-outline btn"
+              className="btn"
               role="button"
               tabIndex={0}
               onClick={(event) => {
