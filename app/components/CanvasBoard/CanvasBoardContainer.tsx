@@ -7,6 +7,7 @@ import { useUpdateEffect, useWindowSize } from 'usehooks-ts'
 import {
   RectangleStackIcon as RectangleStackIconSolid,
   PhotoIcon as PhotoIconSolid,
+  DocumentArrowDownIcon as DocumentArrowDownIconSolid,
 } from '@heroicons/react/24/solid'
 
 import CandyCane from '../../assets/images/sprites/xmas/candy-cane.png'
@@ -26,6 +27,13 @@ const CanvasBoardContainer = () => {
   const { editor, onReady } = useFabricJSEditor()
   const { height } = useWindowSize()
   const [isLoading, setIsLoading] = useState(false)
+
+  const loadSavedCanvas = useCallback(() => {
+    editor?.canvas.loadFromJSON(
+      JSON.parse(localStorage.myFabricJSCanvas),
+      editor?.canvas.renderAll.bind(editor?.canvas)
+    )
+  }, [editor?.canvas])
 
   const updateCanvasSize = useCallback(() => {
     setIsLoading(true)
@@ -57,8 +65,13 @@ const CanvasBoardContainer = () => {
     return
   }
 
+  const saveToLocalStorage = () => {
+    localStorage.myFabricJSCanvas = JSON.stringify(editor?.canvas.toJSON())
+  }
+
   useEffect(() => {
     updateCanvasSize()
+    loadSavedCanvas()
 
     // if (options.showGrid) {
     //   const canvasBoardSize = editor?.canvas?.width || window.innerWidth
@@ -157,13 +170,13 @@ const CanvasBoardContainer = () => {
           role="button"
           tabIndex={0}
           onClick={() => {
-            addRect()
+            saveToLocalStorage()
           }}
           onKeyDown={() => {
-            addRect()
+            saveToLocalStorage()
           }}
         >
-          <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+          <DocumentArrowDownIconSolid className="h-4 w-4" aria-hidden="true" />
         </div>
       </div>
     </div>
