@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { fabric } from 'fabric'
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
-import { useUpdateEffect, useWindowSize } from 'usehooks-ts'
+import { useEventListener, useUpdateEffect, useWindowSize } from 'usehooks-ts'
 
+import { Transition } from '@headlessui/react'
 import {
   RectangleStackIcon as RectangleStackIconSolid,
   PhotoIcon as PhotoIconSolid,
@@ -18,21 +19,33 @@ import SantaClaus from '../../assets/images/sprites/xmas/santa-claus.png'
 
 import Human from '../../assets/images/sprites/human/human.svg'
 
-// interface IFabricCanvasOptions {
-//   showGrid: boolean
-//   gridSize?: number
-// }
+type TSaveState = 'editing' | 'saving' | 'saved'
 
 const CanvasBoardContainer = () => {
   const { editor, onReady } = useFabricJSEditor()
   const { height } = useWindowSize()
   const [isLoading, setIsLoading] = useState(false)
+  const [saveState, setSaveState] = useState<TSaveState>('editing')
 
   const loadSavedCanvas = useCallback(() => {
+    setSaveState('editing')
+
     editor?.canvas.loadFromJSON(
       JSON.parse(localStorage.myFabricJSCanvas),
       editor?.canvas.renderAll.bind(editor?.canvas)
     )
+  }, [editor?.canvas])
+
+  const saveCanvasToLocalStorage = useCallback(() => {
+    setSaveState('saving')
+
+    localStorage.myFabricJSCanvas = JSON.stringify(editor?.canvas.toJSON())
+
+    setSaveState('saved')
+
+    setTimeout(() => {
+      setSaveState('editing')
+    }, 2000)
   }, [editor?.canvas])
 
   const updateCanvasSize = useCallback(() => {
@@ -65,8 +78,18 @@ const CanvasBoardContainer = () => {
     return
   }
 
-  const saveToLocalStorage = () => {
-    localStorage.myFabricJSCanvas = JSON.stringify(editor?.canvas.toJSON())
+  // const keysPressed = {}
+
+  const onKeyboardEvent = (event: KeyboardEvent) => {
+    // keysPressed[event.key] = true
+
+    event.stopImmediatePropagation()
+
+    if (event.key === 'z' && (event.ctrlKey || event.metaKey) && event.shiftKey) {
+      console.log('redo')
+    } else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
+      console.log('undo')
+    }
   }
 
   useEffect(() => {
@@ -102,84 +125,105 @@ const CanvasBoardContainer = () => {
     updateCanvasSize()
   }, [updateCanvasSize])
 
+  useEventListener('keydown', onKeyboardEvent)
+
   if (isLoading) {
     return <div>loading...</div>
   }
 
   return (
-    <div className="flex flex-col overflow-hidden bg-base-200">
-      <FabricJSCanvas
-        className={`m-2 flex rounded-lg border border-amber-500`}
-        onReady={onReady}
-      />
-      <div className="btn-group absolute m-2">
-        <div
-          className="btn"
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            addRect()
-          }}
-          onKeyDown={() => {
-            addRect()
-          }}
-        >
-          <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
-        </div>
-        <div
-          className="btn"
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            addImage()
-          }}
-          onKeyDown={() => {
-            addImage()
-          }}
-        >
-          <PhotoIconSolid className="h-4 w-4" aria-hidden="true" />
-        </div>
-        <div
-          className="btn"
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            addRect()
-          }}
-          onKeyDown={() => {
-            addRect()
-          }}
-        >
-          <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
-        </div>
-        <div
-          className="btn"
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            addRect()
-          }}
-          onKeyDown={() => {
-            addRect()
-          }}
-        >
-          <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
-        </div>
-        <div
-          className="btn"
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            saveToLocalStorage()
-          }}
-          onKeyDown={() => {
-            saveToLocalStorage()
-          }}
-        >
-          <DocumentArrowDownIconSolid className="h-4 w-4" aria-hidden="true" />
+    <>
+      <div className="flex flex-col overflow-hidden bg-base-200">
+        <FabricJSCanvas
+          className={`m-2 flex rounded-lg border border-amber-500`}
+          onReady={onReady}
+        />
+        <div className="btn-group absolute m-2">
+          <div
+            className="btn"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              addRect()
+            }}
+            onKeyDown={() => {
+              addRect()
+            }}
+          >
+            <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+          </div>
+          <div
+            className="btn"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              addImage()
+            }}
+            onKeyDown={() => {
+              addImage()
+            }}
+          >
+            <PhotoIconSolid className="h-4 w-4" aria-hidden="true" />
+          </div>
+          <div
+            className="btn"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              addRect()
+            }}
+            onKeyDown={() => {
+              addRect()
+            }}
+          >
+            <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+          </div>
+          <div
+            className="btn"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              addRect()
+            }}
+            onKeyDown={() => {
+              addRect()
+            }}
+          >
+            <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+          </div>
+          <div
+            className="btn"
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              saveCanvasToLocalStorage()
+            }}
+            onKeyDown={() => {
+              saveCanvasToLocalStorage()
+            }}
+          >
+            <DocumentArrowDownIconSolid className="h-4 w-4" aria-hidden="true" />
+          </div>
         </div>
       </div>
-    </div>
+      <Transition
+        show={saveState === 'saved'}
+        enter="transition-opacity duration-75"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="toast-center toast toast-top">
+          <div className="alert alert-success">
+            <div>
+              <span>Saved!</span>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </>
   )
 }
 
