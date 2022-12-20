@@ -6,12 +6,13 @@ import { useEventListener, useUpdateEffect, useWindowSize } from 'usehooks-ts'
 
 import { Transition } from '@headlessui/react'
 import {
+  ArrowUpLeftIcon as ArrowUpLeftSolid,
   DocumentArrowDownIcon as DocumentArrowDownIconSolid,
-  MagnifyingGlassMinusIcon as MagnifyingGlassMinusIconSolid,
-  PhotoIcon as PhotoIconSolid,
   MagnifyingGlassPlusIcon as MagnifyingGlassPlusIconSolid,
-  RectangleStackIcon as RectangleStackIconSolid,
+  MagnifyingGlassMinusIcon as MagnifyingGlassMinusIconSolid,
 } from '@heroicons/react/24/solid'
+
+import { Image, Text, TickCircle } from 'iconsax-react'
 
 import CandyCane from '../../assets/images/sprites/xmas/candy-cane.png'
 import LightWire from '../../assets/images/sprites/xmas/lights.png'
@@ -21,13 +22,18 @@ import SantaClaus from '../../assets/images/sprites/xmas/santa-claus.png'
 
 import Human from '../../assets/images/sprites/human/human.svg'
 
+type TMenuState = 'select' | 'addImage' | 'addCircle' | 'addSquare'
 type TSaveState = 'editing' | 'saving' | 'saved'
 
 const CanvasBoardContainer = () => {
-  const { editor, onReady } = useFabricJSEditor()
-  const { height } = useWindowSize()
+  const keysPressed: { [key: string]: boolean } = {}
+
   const [isLoading, setIsLoading] = useState(false)
   const [saveState, setSaveState] = useState<TSaveState>('editing')
+  const [menuState, _setMenuState] = useState<TMenuState>('select')
+
+  const { editor, onReady } = useFabricJSEditor()
+  const { height } = useWindowSize()
 
   const loadSavedCanvas = useCallback(() => {
     setSaveState('editing')
@@ -82,20 +88,30 @@ const CanvasBoardContainer = () => {
     return
   }
 
-  // const keysPressed = {}
-
-  const onKeyboardEvent = (event: KeyboardEvent) => {
-    // keysPressed[event.key] = true
-
+  const onKeyDownEvent = (event: KeyboardEvent) => {
     event.stopImmediatePropagation()
 
-    if (event.key === 'z' && (event.ctrlKey || event.metaKey) && event.shiftKey) {
+    keysPressed[event.key] = true
+
+    if (
+      keysPressed['z'] &&
+      (keysPressed['Ctrl'] || keysPressed['Meta']) &&
+      keysPressed['Shift']
+    ) {
       console.log('redo')
-    } else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
+      console.log(keysPressed)
+    } else if (keysPressed['z'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
       console.log('undo')
-    } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
+      console.log(keysPressed)
+    } else if (keysPressed['s'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
       saveCanvasToLocalStorage()
     }
+  }
+
+  const onOnKeyUpEvent = (event: KeyboardEvent) => {
+    event.stopImmediatePropagation()
+
+    delete keysPressed[event.key]
   }
 
   useEffect(() => {
@@ -132,7 +148,8 @@ const CanvasBoardContainer = () => {
   }, [updateCanvasSize])
 
   // Document event Listener
-  useEventListener('keydown', onKeyboardEvent)
+  useEventListener('keydown', onKeyDownEvent)
+  useEventListener('keyup', onOnKeyUpEvent)
 
   if (isLoading) {
     return <div>loading...</div>
@@ -148,7 +165,7 @@ const CanvasBoardContainer = () => {
         <div className="absolute flex flex-row justify-between rounded-lg bg-transparent">
           <div className="btn-group m-2.5">
             <div
-              className="btn"
+              className={menuState === 'select' ? 'btn-active btn' : 'btn'}
               role="button"
               tabIndex={0}
               onClick={() => {
@@ -161,7 +178,7 @@ const CanvasBoardContainer = () => {
                 }
               }}
             >
-              <RectangleStackIconSolid className="h-4 w-4" aria-hidden="true" />
+              <ArrowUpLeftSolid className="h-6 w-6" aria-hidden="true" />
             </div>
             <div
               className="btn"
@@ -177,7 +194,28 @@ const CanvasBoardContainer = () => {
                 }
               }}
             >
-              <PhotoIconSolid className="h-4 w-4" aria-hidden="true" />
+              <Image
+                className="border-neutral-900 rounded border p-1"
+                size={24}
+                color={'#ffffff'}
+                variant="Broken"
+              />
+            </div>
+            <div
+              className="btn"
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                addImage()
+              }}
+              onKeyDown={(event) => {
+                // TODO: Add check from kbd focus event is this button
+                if (event.key === 'Enter') {
+                  addImage()
+                }
+              }}
+            >
+              <Text size={24} color={'#ffffff'} variant="Broken" />
             </div>
             <div
               className="btn"
@@ -207,11 +245,7 @@ const CanvasBoardContainer = () => {
                 editor?.zoomOut()
               }}
               onKeyDown={(event) => {
-                if (
-                  event.key === '-' &&
-                  (event.ctrlKey || event.metaKey) &&
-                  event.shiftKey
-                ) {
+                if (keysPressed['-'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
                   editor?.zoomOut()
                 }
               }}
@@ -229,11 +263,7 @@ const CanvasBoardContainer = () => {
                 editor?.zoomIn()
               }}
               onKeyDown={(event) => {
-                if (
-                  event.key === '+' &&
-                  (event.ctrlKey || event.metaKey) &&
-                  event.shiftKey
-                ) {
+                if (keysPressed['+'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
                   editor?.zoomIn()
                 }
               }}
@@ -255,6 +285,7 @@ const CanvasBoardContainer = () => {
         <div className="toast-center toast toast-top">
           <div className="alert alert-success">
             <div>
+              <TickCircle size={24} fill={'#ffffff'} variant="Broken" />
               <span>Saved!</span>
             </div>
           </div>
