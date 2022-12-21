@@ -26,6 +26,7 @@
     "daisyui": "^2.45.0",
     "fabric": "^5.2.4",
     "fabricjs-react": "^1.1.1",
+    "iconsax-react": "^0.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "usehooks-ts": "^2.9.1"
