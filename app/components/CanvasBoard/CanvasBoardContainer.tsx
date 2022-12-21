@@ -21,8 +21,6 @@ import ChristmasTree from '../../assets/images/sprites/xmas/christmas-tree.png'
 import Snowman from '../../assets/images/sprites/xmas/snowman.png'
 import SantaClaus from '../../assets/images/sprites/xmas/santa-claus.png'
 
-import Human from '../../assets/images/sprites/human/human.svg'
-
 type TActionState = 'select' | 'addImage' | 'addText' | 'addCircle' | 'addSquare'
 type TSaveState = 'editing' | 'saving' | 'saved'
 
@@ -68,7 +66,7 @@ const CanvasBoardContainer = () => {
   }, [editor?.canvas, height])
 
   const addImage = (x: number, y: number) => {
-    const randomImage = [CandyCane, LightWire, ChristmasTree, Snowman, SantaClaus, Human]
+    const randomImage = [CandyCane, LightWire, ChristmasTree, Snowman, SantaClaus]
 
     fabric.Image.fromURL(randomImage[Math.floor(Math.random() * 6)], (image) => {
       image.scale(0.75)
