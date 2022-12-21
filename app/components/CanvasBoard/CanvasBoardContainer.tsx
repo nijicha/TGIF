@@ -5,10 +5,6 @@ import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
 import { useEventListener, useUpdateEffect, useWindowSize } from 'usehooks-ts'
 
 import { Transition } from '@headlessui/react'
-import {
-  MagnifyingGlassPlusIcon as MagnifyingGlassPlusIconSolid,
-  MagnifyingGlassMinusIcon as MagnifyingGlassMinusIconSolid,
-} from '@heroicons/react/24/solid'
 
 import {
   ArrowUpLeftIcon as ArrowUpLeftOutline,
@@ -267,7 +263,7 @@ const CanvasBoardContainer = () => {
                   }
                 }}
               >
-                <Text size={16} color={'#ffffff'} variant="Broken" />
+                <Text size={16} color={'#ffffff'} variant="Outline" />
               </div>
               <div
                 className={
@@ -304,42 +300,42 @@ const CanvasBoardContainer = () => {
                 <IoSquareOutline size={16} color="#ffffff" />
               </div>
             </div>
-            <div className="btn-group">
-              <div
-                className="btn-sm btn"
-                role="button"
-                tabIndex={0}
-                onClick={(event) => {
-                  event.preventDefault()
+            {/*<div className="btn-group">*/}
+            {/*  <div*/}
+            {/*    className="btn-sm btn"*/}
+            {/*    role="button"*/}
+            {/*    tabIndex={0}*/}
+            {/*    onClick={(event) => {*/}
+            {/*      event.preventDefault()*/}
 
-                  editor?.zoomOut()
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === '-' && (event.ctrlKey || event.metaKey)) {
-                    editor?.zoomOut()
-                  }
-                }}
-              >
-                <MagnifyingGlassMinusIconSolid className="h-4 w-4" aria-hidden="true" />
-              </div>
-              <div
-                className="btn-sm btn"
-                role="button"
-                tabIndex={0}
-                onClick={(event) => {
-                  event.preventDefault()
+            {/*      editor?.zoomOut()*/}
+            {/*    }}*/}
+            {/*    onKeyDown={(event) => {*/}
+            {/*      if (event.key === '-' && (event.ctrlKey || event.metaKey)) {*/}
+            {/*        editor?.zoomOut()*/}
+            {/*      }*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    <MagnifyingGlassMinusIconSolid className="h-4 w-4" aria-hidden="true" />*/}
+            {/*  </div>*/}
+            {/*  <div*/}
+            {/*    className="btn-sm btn"*/}
+            {/*    role="button"*/}
+            {/*    tabIndex={0}*/}
+            {/*    onClick={(event) => {*/}
+            {/*      event.preventDefault()*/}
 
-                  editor?.zoomIn()
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === '+' && (event.ctrlKey || event.metaKey)) {
-                    editor?.zoomIn()
-                  }
-                }}
-              >
-                <MagnifyingGlassPlusIconSolid className="h-4 w-4" aria-hidden="true" />
-              </div>
-            </div>
+            {/*      editor?.zoomIn()*/}
+            {/*    }}*/}
+            {/*    onKeyDown={(event) => {*/}
+            {/*      if (event.key === '+' && (event.ctrlKey || event.metaKey)) {*/}
+            {/*        editor?.zoomIn()*/}
+            {/*      }*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    <MagnifyingGlassPlusIconSolid className="h-4 w-4" aria-hidden="true" />*/}
+            {/*  </div>*/}
+            {/*</div>*/}
           </div>
         </div>
       </div>
@@ -355,7 +351,7 @@ const CanvasBoardContainer = () => {
         <div className="toast-center toast toast-top">
           <div className="alert alert-success">
             <div>
-              <TickCircle size={16} fill={'#ffffff'} variant="Broken" />
+              <TickCircle size={16} fill={'#ffffff'} variant="Bulk" />
               <span>Saved!</span>
             </div>
           </div>
@@ -374,7 +370,7 @@ const CanvasBoardContainer = () => {
         <div className="toast-center toast toast-top">
           <div className="alert alert-error">
             <div>
-              <Alarm size={16} fill={'#ffffff'} variant="Broken" />
+              <Alarm size={16} fill={'#ffffff'} variant="Bulk" />
               <span>Error!</span>
             </div>
           </div>
