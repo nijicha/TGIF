@@ -75,6 +75,7 @@ const CanvasBoardContainer = () => {
       image.scale(0.75)
       image.top = y
       image.left = x
+
       editor?.canvas.add(image)
       editor?.canvas.renderAll()
     })
@@ -96,6 +97,29 @@ const CanvasBoardContainer = () => {
     editor?.canvas.renderAll()
   }
 
+  const removeObject = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    editor?.canvas.remove(editor?.canvas.getActiveObject())
+    editor?.canvas.renderAll()
+  }, [editor?.canvas])
+
+  const saveAsImage = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const exportImage = editor?.canvas.toDataURL({
+      format: 'png',
+      quality: 1,
+      // enableRetinaScaling: true,
+      // withoutTransform: true,
+    })
+
+    const w = window.open()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    w.document.write(`<img src='${exportImage}'  alt='export image'/>`)
+  }
+
   useEffect(() => {
     updateCanvasSize()
     loadSavedCanvas()
@@ -108,20 +132,12 @@ const CanvasBoardContainer = () => {
   useEventListener('keydown', (event: KeyboardEvent) => {
     event.stopImmediatePropagation()
 
-    if (event.key === 'e' && (event.ctrlKey || event.metaKey)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const exportImage = editor?.canvas.toDataURL({
-        format: 'png',
-        quality: 1,
-        // enableRetinaScaling: true,
-        // withoutTransform: true,
-      })
-
-      const w = window.open()
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      w.document.write(`<img src='${exportImage}' />`)
+    if (event.key === '[') {
+      console.log('send backward')
+    } else if (event.key === ']') {
+      console.log('bring forward')
+    } else if (event.key === 'e' && (event.ctrlKey || event.metaKey)) {
+      saveAsImage()
     } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
       saveCanvasToLocalStorage()
     } else if (event.key === 'z' && (event.ctrlKey || event.metaKey) && event.shiftKey) {
@@ -129,11 +145,7 @@ const CanvasBoardContainer = () => {
     } else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
       console.log('undo')
     } else if (event.key === 'Backspace' || event.key === 'Delete') {
-      console.log('delete object')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      editor?.canvas.remove(editor?.canvas.getActiveObject())
-      editor?.canvas.renderAll()
+      removeObject()
     }
   })
 
