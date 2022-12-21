@@ -369,7 +369,7 @@ module.exports = {
         '"Apple Color Emoji"',
         '-apple-system',
         'sans-serif',
-        'system-ui'
+        'system-ui',
       ],
       serif: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
       mono: [
@@ -963,8 +963,8 @@ module.exports = {
     'disabled',
   ],
   plugins: [
-    require("@tailwindcss/aspect-ratio"),
-    require("@tailwindcss/typography"),
-    require("daisyui")
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography'),
+    require('daisyui'),
   ],
 }

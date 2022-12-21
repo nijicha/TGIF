@@ -70,7 +70,7 @@ const CanvasBoardContainer = () => {
     setIsLoading(false)
   }, [editor?.canvas, height])
 
-  const addImage = (x: number, y: number) => {
+  const AddImage = (x: number, y: number) => {
     const randomImage = [CandyCane, LightWire, ChristmasTree, Snowman, SantaClaus, Human]
 
     fabric.Image.fromURL(randomImage[Math.floor(Math.random() * 6)], (image) => {
@@ -83,7 +83,7 @@ const CanvasBoardContainer = () => {
     return
   }
 
-  const addSquare = (x: number, y: number) => {
+  const AddSquare = (x: number, y: number) => {
     const rect = new fabric.Rect({
       top: y,
       left: x,
@@ -101,30 +101,6 @@ const CanvasBoardContainer = () => {
   useEffect(() => {
     updateCanvasSize()
     loadSavedCanvas()
-
-    // if (options.showGrid) {
-    //   const canvasBoardSize = editor?.canvas?.width || window.innerWidth
-    //   const gridSize = options.gridSize || 5
-    //   for (let x = 1; x < canvasBoardSize / gridSize; x++) {
-    //     editor?.canvas.add(
-    //       new fabric.Line([100 * x, 0, 100 * x, height], {
-    //         stroke: '#000000',
-    //         strokeWidth: 1,
-    //         selectable: false,
-    //         strokeDashArray: [gridSize, gridSize],
-    //       })
-    //     )
-    //     editor?.canvas.add(
-    //       new fabric.Line([0, 100 * x, width, 100 * x], {
-    //         stroke: '#000000',
-    //         strokeWidth: 1,
-    //         selectable: false,
-    //         strokeDashArray: [gridSize, gridSize],
-    //       })
-    //     )
-    //   }
-    //   editor?.canvas.renderAll()
-    // }
   }, [loadSavedCanvas, updateCanvasSize])
 
   useUpdateEffect(() => {
@@ -165,14 +141,14 @@ const CanvasBoardContainer = () => {
     if (actionState !== 'select' && isNoActiveObject()) {
       switch (actionState) {
         case 'addImage':
-          addImage(event.clientX, event.clientY)
+          AddImage(event.clientX, event.clientY)
           break
         case 'addText':
           break
         case 'addCircle':
           break
         case 'addSquare':
-          addSquare(event.clientX, event.clientY)
+          AddSquare(event.clientX, event.clientY)
           break
       }
 
@@ -194,13 +170,13 @@ const CanvasBoardContainer = () => {
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden bg-base-200 p-2">
+      <div className="relative box-border flex flex-col overflow-hidden bg-base-200 p-2">
         <FabricJSCanvas
           className="flex rounded-lg border border-amber-500"
           onReady={onReady}
         />
         <div className="absolute w-full">
-          <div className="flex flex-row justify-between rounded-lg bg-transparent p-4">
+          <div className="flex flex-row justify-between bg-transparent p-4">
             <div className="btn-group">
               <div
                 className={
