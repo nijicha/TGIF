@@ -72,6 +72,8 @@ const CanvasBoardContainer = () => {
       image.scale(0.75)
       image.top = y
       image.left = x
+      image.originX = 'center'
+      image.originY = 'center'
 
       editor?.canvas.add(image)
       editor?.canvas.renderAll()
@@ -79,10 +81,25 @@ const CanvasBoardContainer = () => {
     return
   }
 
+  const addText = (x: number, y: number) => {
+    const textBox = new fabric.Textbox('Hello, World!', {
+      top: y,
+      left: x,
+      originX: 'center',
+      originY: 'center',
+      isWrapping: true,
+    })
+
+    editor?.canvas.add(textBox)
+    editor?.canvas.renderAll()
+  }
+
   const addCircle = (x: number, y: number) => {
     const circle = new fabric.Circle({
       top: y,
       left: x,
+      originX: 'center',
+      originY: 'center',
       radius: 100,
       fill: 'white',
       borderColor: 'black',
@@ -97,20 +114,27 @@ const CanvasBoardContainer = () => {
     const rect = new fabric.Rect({
       top: y,
       left: x,
+      originX: 'center',
+      originY: 'center',
       height: 200,
       width: 200,
       fill: 'white',
       borderColor: 'black',
       hasBorders: true,
     })
+
     editor?.canvas.add(rect)
     editor?.canvas.renderAll()
   }
 
   const removeObject = useCallback(() => {
+    const activeObject = editor?.canvas.getActiveObject()
+
+    console.log(activeObject)
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    editor?.canvas.remove(editor?.canvas.getActiveObject())
+    editor?.canvas.remove(activeObject)
     editor?.canvas.renderAll()
   }, [editor?.canvas])
 
@@ -177,6 +201,7 @@ const CanvasBoardContainer = () => {
           addImage(event.clientX, event.clientY)
           break
         case 'addText':
+          addText(event.clientX, event.clientY)
           break
         case 'addCircle':
           addCircle(event.clientX, event.clientY)
