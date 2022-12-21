@@ -109,7 +109,19 @@ const CanvasBoardContainer = () => {
     event.stopImmediatePropagation()
 
     if (event.key === 'e' && (event.ctrlKey || event.metaKey)) {
-      console.log('export')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const exportImage = editor?.canvas.toDataURL({
+        format: 'png',
+        quality: 1,
+        // enableRetinaScaling: true,
+        // withoutTransform: true,
+      })
+
+      const w = window.open()
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      w.document.write(`<img src='${exportImage}' />`)
     } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
       saveCanvasToLocalStorage()
     } else if (event.key === 'z' && (event.ctrlKey || event.metaKey) && event.shiftKey) {
