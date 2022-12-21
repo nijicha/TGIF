@@ -85,6 +85,20 @@ const CanvasBoardContainer = () => {
     return
   }
 
+  const addCircle = (x: number, y: number) => {
+    const circle = new fabric.Circle({
+      top: y,
+      left: x,
+      radius: 100,
+      fill: 'white',
+      borderColor: 'black',
+      hasBorders: true,
+    })
+
+    editor?.canvas.add(circle)
+    editor?.canvas.renderAll()
+  }
+
   const addSquare = (x: number, y: number) => {
     const rect = new fabric.Rect({
       top: y,
@@ -92,8 +106,7 @@ const CanvasBoardContainer = () => {
       height: 200,
       width: 200,
       fill: 'white',
-      borderColor: '#000000',
-      borderScaleFactor: 1,
+      borderColor: 'black',
       hasBorders: true,
     })
     editor?.canvas.add(rect)
@@ -172,6 +185,7 @@ const CanvasBoardContainer = () => {
         case 'addText':
           break
         case 'addCircle':
+          addCircle(event.clientX, event.clientY)
           break
         case 'addSquare':
           addSquare(event.clientX, event.clientY)
