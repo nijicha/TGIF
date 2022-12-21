@@ -29,8 +29,6 @@ type TActionState = 'select' | 'addImage' | 'addText' | 'addCircle' | 'addSquare
 type TSaveState = 'editing' | 'saving' | 'saved'
 
 const CanvasBoardContainer = () => {
-  const keysPressed: { [key: string]: boolean } = {}
-
   const [isLoading, setIsLoading] = useState(false)
   const [saveState, setSaveState] = useState<TSaveState>('editing')
   const [actionState, setActionState] = useState<TActionState>('select')
@@ -70,7 +68,7 @@ const CanvasBoardContainer = () => {
     setIsLoading(false)
   }, [editor?.canvas, height])
 
-  const AddImage = (x: number, y: number) => {
+  const addImage = (x: number, y: number) => {
     const randomImage = [CandyCane, LightWire, ChristmasTree, Snowman, SantaClaus, Human]
 
     fabric.Image.fromURL(randomImage[Math.floor(Math.random() * 6)], (image) => {
@@ -83,7 +81,7 @@ const CanvasBoardContainer = () => {
     return
   }
 
-  const AddSquare = (x: number, y: number) => {
+  const addSquare = (x: number, y: number) => {
     const rect = new fabric.Rect({
       top: y,
       left: x,
@@ -110,19 +108,15 @@ const CanvasBoardContainer = () => {
   useEventListener('keydown', (event: KeyboardEvent) => {
     event.stopImmediatePropagation()
 
-    keysPressed[event.key] = true
-
-    if (
-      keysPressed['z'] &&
-      (keysPressed['Ctrl'] || keysPressed['Meta']) &&
-      keysPressed['Shift']
-    ) {
-      console.log('redo')
-    } else if (keysPressed['z'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
-      console.log('undo')
-    } else if (keysPressed['s'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
+    if (event.key === 'e' && (event.ctrlKey || event.metaKey)) {
+      console.log('export')
+    } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
       saveCanvasToLocalStorage()
-    } else if (keysPressed['Backspace'] || keysPressed['Delete']) {
+    } else if (event.key === 'z' && (event.ctrlKey || event.metaKey) && event.shiftKey) {
+      console.log('redo')
+    } else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
+      console.log('undo')
+    } else if (event.key === 'Backspace' || event.key === 'Delete') {
       console.log('delete object')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -131,24 +125,18 @@ const CanvasBoardContainer = () => {
     }
   })
 
-  useEventListener('keyup', (event: KeyboardEvent) => {
-    event.stopImmediatePropagation()
-
-    delete keysPressed[event.key]
-  })
-
   useEventListener('mousedown', (event: MouseEvent) => {
     if (actionState !== 'select' && isNoActiveObject()) {
       switch (actionState) {
         case 'addImage':
-          AddImage(event.clientX, event.clientY)
+          addImage(event.clientX, event.clientY)
           break
         case 'addText':
           break
         case 'addCircle':
           break
         case 'addSquare':
-          AddSquare(event.clientX, event.clientY)
+          addSquare(event.clientX, event.clientY)
           break
       }
 
@@ -187,8 +175,8 @@ const CanvasBoardContainer = () => {
                 onClick={() => {
                   setActionState('select')
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['Enter']) {
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
                     setActionState('select')
                   }
                 }}
@@ -204,8 +192,8 @@ const CanvasBoardContainer = () => {
                 onClick={() => {
                   setActionState('addImage')
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['Enter']) {
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
                     setActionState('addImage')
                   }
                 }}
@@ -221,8 +209,8 @@ const CanvasBoardContainer = () => {
                 onClick={() => {
                   setActionState('addText')
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['Enter']) {
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
                     setActionState('addText')
                   }
                 }}
@@ -238,8 +226,8 @@ const CanvasBoardContainer = () => {
                 onClick={() => {
                   setActionState('addCircle')
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['Enter']) {
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
                     setActionState('addCircle')
                   }
                 }}
@@ -255,8 +243,8 @@ const CanvasBoardContainer = () => {
                 onClick={() => {
                   setActionState('addSquare')
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['Enter']) {
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
                     setActionState('addSquare')
                   }
                 }}
@@ -274,8 +262,8 @@ const CanvasBoardContainer = () => {
 
                   editor?.zoomOut()
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['-'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
+                onKeyDown={(event) => {
+                  if (event.key === '-' && (event.ctrlKey || event.metaKey)) {
                     editor?.zoomOut()
                   }
                 }}
@@ -291,8 +279,8 @@ const CanvasBoardContainer = () => {
 
                   editor?.zoomIn()
                 }}
-                onKeyDown={() => {
-                  if (keysPressed['+'] && (keysPressed['Ctrl'] || keysPressed['Meta'])) {
+                onKeyDown={(event) => {
+                  if (event.key === '+' && (event.ctrlKey || event.metaKey)) {
                     editor?.zoomIn()
                   }
                 }}
