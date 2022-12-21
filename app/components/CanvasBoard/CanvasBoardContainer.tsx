@@ -15,7 +15,9 @@ import {
   PhotoIcon as PhotoIconOutline,
 } from '@heroicons/react/24/outline'
 
-import { ElementPlus, Text, TickCircle } from 'iconsax-react'
+import { Text, TickCircle, Alarm } from 'iconsax-react'
+
+import { IoSquareOutline, IoEllipseOutline } from 'react-icons/io5'
 
 import CandyCane from '../../assets/images/sprites/xmas/candy-cane.png'
 import LightWire from '../../assets/images/sprites/xmas/lights.png'
@@ -32,6 +34,7 @@ const CanvasBoardContainer = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [saveState, setSaveState] = useState<TSaveState>('editing')
   const [actionState, setActionState] = useState<TActionState>('select')
+  const [isError, setIsError] = useState(false)
 
   const { editor, onReady } = useFabricJSEditor()
   const { height } = useWindowSize()
@@ -105,19 +108,30 @@ const CanvasBoardContainer = () => {
   }, [editor?.canvas])
 
   const saveAsImage = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const exportImage = editor?.canvas.toDataURL({
-      format: 'png',
-      quality: 1,
-      // enableRetinaScaling: true,
-      // withoutTransform: true,
-    })
+    try {
+      const imageBase64 = editor?.canvas.toDataURL({
+        format: 'png',
+        quality: 1,
+        // enableRetinaScaling: true,
+        // withoutTransform: true,
+      })
 
-    const w = window.open()
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    w.document.write(`<img src='${exportImage}'  alt='export image'/>`)
+      if (imageBase64) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const w = window.open()
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        w.document.write(`<img src='${imageBase64}'  alt='export image'/>`)
+
+        //   window.location.href =
+        //     'data:application/octet-stream;base64,' +
+        //     imageBase64?.replace('data:image/png;base64,', '')
+      }
+    } catch (err) {
+      console.log(err)
+      setIsError(true)
+    }
   }
 
   useEffect(() => {
@@ -256,7 +270,7 @@ const CanvasBoardContainer = () => {
                   }
                 }}
               >
-                <ElementPlus size={16} color={'#ffffff'} variant="Broken" />
+                <IoEllipseOutline size={16} color="#ffffff" />
               </div>
               <div
                 className={
@@ -273,7 +287,7 @@ const CanvasBoardContainer = () => {
                   }
                 }}
               >
-                <ElementPlus size={16} color={'#ffffff'} variant="Broken" />
+                <IoSquareOutline size={16} color="#ffffff" />
               </div>
             </div>
             <div className="btn-group">
@@ -329,6 +343,25 @@ const CanvasBoardContainer = () => {
             <div>
               <TickCircle size={16} fill={'#ffffff'} variant="Broken" />
               <span>Saved!</span>
+            </div>
+          </div>
+        </div>
+      </Transition>
+
+      <Transition
+        show={isError}
+        enter="transition-opacity duration-75"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="toast-center toast toast-top">
+          <div className="alert alert-error">
+            <div>
+              <Alarm size={16} fill={'#ffffff'} variant="Broken" />
+              <span>Error!</span>
             </div>
           </div>
         </div>
